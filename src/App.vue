@@ -1,18 +1,20 @@
 <template>
   <div id="app">
     <h2>tool for mvel </h2>
-    <!-- <el-button type="primary" @click="getData">生成</el-button> -->
+    <el-button type="primary" @click="getData">生成</el-button>
     <mvel-cpn :list="list" />
     <div class="btn_group" v-if="!list.length">
       <el-button type="text" @click="addNewRule">+</el-button>
       <el-button type="text" @click="addNewRuleBracket">()+</el-button>
     </div>
+    <p>{{ mvelStr }}</p>
   </div>
 </template>
 
 <script>
 import MvelCpn from './components/MvelCpn'
 import _ from 'lodash'
+import { generateRuleMap } from './utils'
 export default {
   components: {
     MvelCpn
@@ -22,18 +24,19 @@ export default {
       list: [],
       // 带括号、带规则数据
       ruleBracketItem: {
-        visible: false,
         visible1: false,
+        visible3: false,
         bracket: 1,
         props5: '&&',
         children: [
           {
-            visible: false,
             visible1: false,
+            visible3: false,
             props5: '&&',
             rule: {
               not: false,
               props1: 'title',
+              get: '',
               props2: 'contain',
               props3: '',
               props4: '&&',
@@ -45,26 +48,40 @@ export default {
       },
       // 无括号规则数据
       ruleItem: {
-        visible: false,
         visible1: false,
+        visible3: false,
         props5: '&&',
         rule: {
           not: false,
           props1: 'title',
+          get: '',
           props2: 'contain',
           props3: '',
           props4: '&&',
         },
         children: []
       },
+      // mvel
+      mvelStr: ''
     }
   },
   mounted() {
   },
+  watch: {
+    list: {
+      handler: (newList, oldList) => {
+        const res = generateRuleMap(newList)
+        console.log(res)
+      },
+      deep: true
+    }
+  },
   methods: {
     getData() {
-      console.log(this.list)
+      const res = generateRuleMap(this.list)
+      // console.log(res);
     },
+
     // 添加无括号规则
     addNewRule() {
       const newBracketRule = _.cloneDeep(this.ruleItem)

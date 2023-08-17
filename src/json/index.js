@@ -172,3 +172,8 @@ export const list = [
     ]
   }
 ]
+
+// export const ruleList = [{ "visible": false, "visible1": false, "bracket": 1, "props5": "&&", "children": [{ "visible": false, "visible1": false, "bracket": 1, "props5": "&&", "children": [{ "visible": false, "visible1": false, "bracket": 1, "props5": "&&", "children": [{ "visible": false, "visible1": false, "props5": "&&", "rule": { "not": false, "props1": "title", "props2": "contain", "props3": "", "props4": "&&" }, "children": [] }] }] }] }]
+// export const ruleList = [{"visible":false,"visible1":false,"bracket":1,"props5":"&&","children":[{"visible":false,"visible1":false,"bracket":1,"props5":"&&","children":[{"visible":false,"visible1":false,"props5":"&&","rule":{"not":false,"props1":"title","props2":"contain","props3":"","props4":"&&"},"children":[]}]}]}]
+// export const ruleList = [{"visible":false,"visible1":false,"bracket":1,"props5":"&&","children":[{"visible":false,"visible1":false,"props5":"&&","rule":{"not":false,"props1":"title","props2":"contain","props3":"","props4":"&&"},"children":[]}]}]
+export const ruleList = [{ "visible": false, "visible1": false, "props5": "&&", "rule": { "not": false, "props1": "title", "props2": "contain", "props3": "", "props4": "&&" }, "children": [] }]
