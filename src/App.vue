@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <h2>tool for mvel </h2>
-    <el-button type="primary" @click="getData">生成</el-button>
+    <el-button type="primary" @click="createData" size="mini" :disabled="!ruleDisabled">生成</el-button>
+    <el-button type="text" sizi="mini" @click="clearRule">清空</el-button>
     <mvel-cpn :list="list" />
     <div class="btn_group" v-if="!list.length">
       <el-button type="text" @click="addNewRule">+</el-button>
@@ -14,13 +15,15 @@
 <script>
 import MvelCpn from './components/MvelCpn'
 import _ from 'lodash'
-import { generateRuleMap } from './utils'
+import { generateRuleMap, validateRules } from './utils'
 export default {
   components: {
     MvelCpn
   },
   data() {
     return {
+      mvelStr: '',
+      ruleDisabled: false,
       list: [],
       // 带括号、带规则数据
       ruleBracketItem: {
@@ -37,7 +40,7 @@ export default {
               not: false,
               props1: 'title',
               get: '',
-              props2: 'contain',
+              props2: 'contains',
               props3: '',
               props4: '&&',
 
@@ -55,31 +58,41 @@ export default {
           not: false,
           props1: 'title',
           get: '',
-          props2: 'contain',
+          props2: 'contains',
           props3: '',
           props4: '&&',
         },
         children: []
       },
-      // mvel
-      mvelStr: ''
+
     }
   },
   mounted() {
   },
   watch: {
     list: {
-      handler: (newList, oldList) => {
-        const res = generateRuleMap(newList)
-        console.log(res)
+      handler(newList, oldList) {
+        if (!newList.length) {
+          return false
+        }
+        this.mvelStr = ''
+        const validres = validateRules(newList)
+        this.ruleDisabled = validres
       },
       deep: true
     }
   },
   methods: {
-    getData() {
+    // 清空规则
+    clearRule() {
+      this.list = []
+      this.ruleDisabled = false
+      this.mvelStr = ''
+    },
+    // 生成数据
+    createData() {
       const res = generateRuleMap(this.list)
-      // console.log(res);
+      this.mvelStr = res
     },
 
     // 添加无括号规则

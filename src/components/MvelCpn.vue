@@ -15,7 +15,12 @@
               {{ item.rule.props1 }}
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-for="el in ops1" :command="el.value">{{ el.label }}</el-dropdown-item>
+              <el-dropdown-item v-for="el in ops1" :command="el.value">
+                <div style="display: flex; justify-content: space-between;">
+                  <span>{{ el.label }}</span>
+                  <span style="color: #999;margin-left: 10px;">{{ el.name }}</span>
+                </div>
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
 
@@ -31,7 +36,7 @@
 
           <el-dropdown class="marR20 pointer" @command="(command) => handleCommand2(item, command)" trigger="click">
             <span class="el-dropdown-link">
-              {{ item.rule.props2 }}
+              {{ item.rule.props2 === 'contains' ? '包含' : item.rule.props2 }}
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item v-for="el in ops2" :command="el.value">{{ el.label }}</el-dropdown-item>
@@ -50,7 +55,7 @@
           <el-dropdown class="marR20 pointer" v-show="index !== (list.length - 1)"
             @command="(command) => handleCommand3(item, command)" trigger="click">
             <span class="el-dropdown-link">
-              {{ item.rule.props4 }}
+              {{ item.rule.props4 === '&&' ? '且' : '或' }}
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item v-for="el in ops3" :command="el.value">{{ el.label }}</el-dropdown-item>
@@ -73,7 +78,7 @@
         <el-dropdown class="marR20 pointer" v-show="index !== (list.length - 1)"
           @command="(command) => handleCommand4(item, command)" trigger="click">
           <span class="el-dropdown-link">
-            {{ item.props5 }}
+            {{ item.props5 === '&&' ? '且' : '或' }}
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item v-for="el in ops3" :command="el.value">{{ el.label }}</el-dropdown-item>
@@ -123,7 +128,7 @@ export default {
               not: false,
               props1: 'title',
               get: '',
-              props2: 'contain',
+              props2: 'contains',
               props3: '',
               props4: '&&',
 
@@ -141,7 +146,7 @@ export default {
           not: false,
           props1: 'title',
           get: '',
-          props2: 'contain',
+          props2: 'contains',
           props3: '',
           props4: '&&',
         },
@@ -226,12 +231,12 @@ export default {
       ],
       ops3: [
         {
-          label: '或',
-          value: '||',
-        },
-        {
           label: '且',
           value: '&&',
+        },
+        {
+          label: '或',
+          value: '||',
         },
       ],
     }
